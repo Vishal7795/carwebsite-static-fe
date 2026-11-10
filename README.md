@@ -245,4 +245,4 @@ The project assignment calls for cost awareness and safe cleanup. Check the AWS 
 
 The latest Jenkins console log supplied for this exercise shows build #13 completing successfully: four images pushed to ECR, all four images scanned, ECR deployment and container health checks completed, six application endpoints passed, and the homepage verification completed. Trivy findings remain report-only under the current `--exit-code 0` configuration.
 
-The README describes the project and the observed run. Update this section with the final review/build number if another pipeline run is performed.
+
