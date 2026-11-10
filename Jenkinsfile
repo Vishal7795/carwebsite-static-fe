@@ -60,35 +60,39 @@ pipeline {
             }
         }
 
-        stage('Trivy Security Scan') {
-            steps {
-                sh '''
-                    set -e
-                    mkdir -p trivy-reports
+       
+  stage('Trivy Security Scan') {
+      steps {
+        sh '''
+            set -e
+            mkdir -p trivy-reports
 
-                    for SERVICE in user-service product-service order-service
-                    do
-                        IMAGE="$ECR_REGISTRY/$SERVICE:$IMAGE_TAG"
+            for SERVICE in user-service product-service order-service carwebsite-frontend
+            do
+                IMAGE="$ECR_REGISTRY/$SERVICE:$IMAGE_TAG"
 
-                        echo "Scanning $IMAGE"
+                echo "=================================="
+                echo "Scanning image: $IMAGE"
+                echo "=================================="
 
-                        trivy --config "" image \
-                          --exit-code 0 \
-                          --format table \
-                          --output "trivy-reports/$SERVICE.txt" \
-                          "$IMAGE"
+                trivy --config "" image \
+                  --exit-code 0 \
+                  --format table \
+                  --output "trivy-reports/$SERVICE.txt" \
+                  "$IMAGE"
 
-                        trivy --config "" image \
-                          --exit-code 0 \
-                          --format json \
-                          --output "trivy-reports/$SERVICE.json" \
-                          "$IMAGE"
-                    done
+                trivy --config "" image \
+                  --exit-code 0 \
+                  --format json \
+                  --output "trivy-reports/$SERVICE.json" \
+                  "$IMAGE"
+            done
 
-                    echo "Trivy scans completed."
-                '''
-            }
-        }
+            echo "All four Trivy image scans completed."
+        '''
+    }
+}
+
 
         stage('Prepare ECR Deployment') {
             steps {
