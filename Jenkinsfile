@@ -130,6 +130,42 @@ EOF
             }
         }
 
+        stage('Application API Tests') {
+    steps {
+        sh '''
+            set -e
+
+            BASE_URL="http://localhost"
+
+            endpoints="
+            /health/user
+            /health/product
+            /health/order
+            /api/users
+            /api/products
+            /api/orders
+            "
+
+            for endpoint in $endpoints
+            do
+                echo "Testing: $endpoint"
+
+                response=$(curl -fsS "$BASE_URL$endpoint")
+
+                if [ -z "$response" ]; then
+                    echo "FAILED: $endpoint returned an empty response"
+                    exit 1
+                fi
+
+                echo "PASSED: $endpoint"
+                echo "Response: $response"
+            done
+
+            echo "All application API tests passed!"
+        '''
+    }
+}
+
         stage('Verify Deployment') {
             steps {
                 sh '''
