@@ -46,13 +46,14 @@ Prometheus <- Node Exporter -> Grafana dashboards
 ## 4. Repository Layout
 
 - `Jenkinsfile`: CI/CD stages, deployment, API tests, verification and report archiving.
+- `terraform/`: Terraform provider, variables, EC2 data lookup, three ECR repository resources, provider lock file and local-state ignore rules.
 - `docker-compose.yml`: application services, health checks, restart policies and dependencies.
 - `nginx/`: frontend Dockerfile and reverse-proxy routes.
 - `services/{user,product,order}-service/`: Node.js service code and Dockerfiles.
 - `.github/workflows/`: GitHub Actions workflow file(s).
 - `Task-4.docx`: supplementary DOCX file included at the repository root; verify its contents and role before treating it as submission evidence.
 
-Terraform configuration and monitoring Compose/configuration were maintained on the EC2 host during this exercise; they are not present in this repository snapshot.
+Terraform configuration is committed under `terraform/`. The monitoring Compose/configuration and Grafana/Prometheus screenshots remain on the EC2 host and are not included in this repository snapshot.
 
 ## 5. Application Routes
 
@@ -195,9 +196,9 @@ Capture the failure response, recovery command and healthy response in the evide
 
 ## 12. Terraform and Infrastructure
 
-Terraform files were maintained in the EC2 host directory `terraform-aws-project` during the exercise. The completed run used init, validate, plan and apply, with the existing EC2 instance and three microservice ECR repositories represented in state. The frontend ECR repository was handled separately.
+Terraform configuration is committed under `terraform/`. It looks up the existing EC2 instance using an `aws_instance` data source and declares three ECR repositories (`user-service`, `product-service`, `order-service`) as managed resources. The frontend ECR repository is handled separately by the current setup. The pasted configuration does **not** declare EC2, security-group or IAM resources, so those assignment requirements are not evidenced as provisioned by this Terraform code.
 
-Because the Terraform configuration/state is not included in this repository snapshot, do not assume the local directory is reproducible from this repo. For a fresh environment, obtain and review the actual Terraform files and backend/state arrangement first.
+The exercise run was reported as successful for `init`, `validate`, `plan` and `apply`, with the EC2 lookup and ECR repositories represented in state. The actual state file and backup remain intentionally excluded. For a fresh environment, review the AWS account, region, existing resources, imports and backend/state arrangement before running `terraform plan` or `apply`; do not assume this configuration creates the full infrastructure from scratch.
 
 Typical review commands (run in the Terraform directory):
 
