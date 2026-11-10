@@ -50,7 +50,7 @@ Prometheus <- Node Exporter -> Grafana dashboards
 - `nginx/`: frontend Dockerfile and reverse-proxy routes.
 - `services/{user,product,order}-service/`: Node.js service code and Dockerfiles.
 - `.github/workflows/`: GitHub Actions workflow file(s).
-- `Task-4.docx`: project task/evidence document supplied with the repository.
+- `Task-4.docx`: supplementary DOCX file included at the repository root; verify its contents and role before treating it as submission evidence.
 
 Terraform configuration and monitoring Compose/configuration were maintained on the EC2 host during this exercise; they are not present in this repository snapshot.
 
